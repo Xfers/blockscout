@@ -3,6 +3,7 @@ import AutoComplete from '@tarekraafat/autocomplete.js/dist/autoComplete'
 import { getTextAdData, fetchTextAdData } from './ad'
 import { DateTime } from 'luxon'
 import { appendTokenIcon } from './token_icon'
+import xss from 'xss'
 
 const placeHolder = 'Search by address, token symbol, name, transaction hash, or block number'
 const dataSrc = async (query, id) => {
@@ -53,7 +54,7 @@ const searchEngine = (query, record) => {
       (record.block_hash && record.block_hash.toLowerCase().includes(query.toLowerCase()))
   )
   ) {
-    var searchResult = '<div>'
+    let searchResult = '<div>'
     searchResult += `<div>${record.address_hash || record.tx_hash || record.block_hash}</div>`
 
     if (record.type === 'label') {
@@ -75,7 +76,7 @@ const searchEngine = (query, record) => {
       searchResult += '</div>'
     }
     searchResult += '</div>'
-    var re = new RegExp(query, 'ig')
+    const re = new RegExp(query, 'ig')
     searchResult = searchResult.replace(re, '<mark class=\'autoComplete_highlight\'>$&</mark>')
     return searchResult
   }
@@ -117,6 +118,9 @@ const config = (id) => {
     resultItem: {
       element: (item, data) => resultItemElement(item, data),
       highlight: 'autoComplete_highlight'
+    },
+    query: (input) => {
+      return xss(input)
     },
     events: {
       input: {
