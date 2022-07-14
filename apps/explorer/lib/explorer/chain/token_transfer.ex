@@ -82,7 +82,7 @@ defmodule Explorer.Chain.TokenTransfer do
     field(:block_number, :integer)
     field(:log_index, :integer, primary_key: true)
     field(:token_id, :decimal)
-    field(:metadata, :map)
+    field(:metadata, Ecto.JSON)
     field(:amounts, {:array, :decimal})
     field(:token_ids, {:array, :decimal})
 

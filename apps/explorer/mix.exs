@@ -73,6 +73,7 @@ defmodule Explorer.Mixfile do
       {:ecto, "~> 3.3", override: true},
       # Storing blockchain data and derived data in PostgreSQL.
       {:ecto_sql, "~> 3.3"},
+      {:ecto_json, "~> 0.1.0"},
       # JSONRPC access to query smart contracts
       {:ethereum_jsonrpc, in_umbrella: true},
       # Data factory for testing
