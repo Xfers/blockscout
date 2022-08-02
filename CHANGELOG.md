@@ -4,8 +4,12 @@
 - [#5739](https://github.com/blockscout/blockscout/pull/5739) - Erigon archive node support
 - [#5732](https://github.com/blockscout/blockscout/pull/5732) - Manage testnet label (right to the navbar logo)
 - [#5699](https://github.com/blockscout/blockscout/pull/5699) - Switch to basic (non-pro) API endpoint for Coingecko requests, if API key is not provided
+- [#5542](https://github.com/blockscout/blockscout/pull/5542) - Add `jq` in docker image
+- [#5345](https://github.com/blockscout/blockscout/pull/5345) - Graphql: add user-selected ordering to transactions for address query
 
 ### Fixes
+- [#5768](https://github.com/blockscout/blockscout/pull/5768) - Outstanding rows limit for missing blocks query (catchup fetcher)
+- [#5737](https://github.com/blockscout/blockscout/pull/5737), [#5772](https://github.com/blockscout/blockscout/pull/5772) - Fix double requests; Fix token balances dropdown view
 - [#5723](https://github.com/blockscout/blockscout/pull/5723) - Add nil clause for Data.to_string/1
 - [#5714](https://github.com/blockscout/blockscout/pull/5714) - Add clause for EthereumJSONRPC.Transaction.elixir_to_params/1 when gas_price is missing in the response
 - [#5697](https://github.com/blockscout/blockscout/pull/5697) - Gas price oracle: ignore gas price rounding for values less than 0.01
@@ -13,6 +17,7 @@
 
 ### Chore
 - [#5736](https://github.com/blockscout/blockscout/pull/5736) - Remove obsolete network selector
+- [#5730](https://github.com/blockscout/blockscout/pull/5730) - Add primary keys for DB tables where they do not exist
 - [#5703](https://github.com/blockscout/blockscout/pull/5703) - Remove bridged tokens functionality from Blockscout core
 - [#5700](https://github.com/blockscout/blockscout/pull/5700) - Remove Staking dapp logic from Blockscout core
 - [#5696](https://github.com/blockscout/blockscout/pull/5696) - Update .tool-versions
