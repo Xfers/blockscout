@@ -39,8 +39,13 @@ jobs:
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/blockscout
 
-      - name: Add SHORT_SHA env property with commit short sha
-        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-7`" >> $GITHUB_ENV
+      - name: Add Pull Request SHORT_SHA
+        if: github.event.is_pull_request
+        run: echo "SHORT_SHA=`echo ${{ github.event.pull_request.head.sha }} | cut -c1-7`" >> $GITHUB_ENV
+
+      - name: Add Push SHORT_SHA
+        if: github.event.is_push
+        run: echo "SHORT_SHA=`echo ${{ github.event.push.head_commit.id }} | cut -c1-7`" >> $GITHUB_ENV
 
       - name: Set Sha Tag
         id: set-sha-tags
@@ -60,6 +65,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
+          pull: true
           push: true
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/blockscout:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/blockscout:buildcache,mode=max
