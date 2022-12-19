@@ -40,12 +40,20 @@ jobs:
           images: ${{ secrets.DOCKER_USERNAME }}/blockscout
 
       - name: Add SHORT_SHA env property with commit short sha
-        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-7`" >> $GITHUB_ENV
 
-      - name: Add outputs
+      - name: Set Sha Tag
+        id: set-sha-tags
+        shell: bash
         run: |
-          echo "::set-output name=short-sha::${{ env.SHORT_SHA }}"
-        id: output-step
+          echo "TAGS=${{ secrets.DOCKER_USERNAME }}/blockscout:${{ env.SHORT_SHA }}" >> $GITHUB_ENV
+
+      - name: Set Latest Tag
+        id: set-latest-tags
+        if: github.ref == 'refs/heads/xfers'
+        shell: bash
+        run: |
+          echo "TAGS=${{ env.TAGS }},${{ secrets.DOCKER_USERNAME }}/blockscout:latest" >> $GITHUB_ENV
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
@@ -55,7 +63,7 @@ jobs:
           push: true
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/blockscout:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/blockscout:buildcache,mode=max
-          tags: ${{ secrets.DOCKER_USERNAME }}/blockscout:${{ env.SHORT_SHA }}
+          tags: ${{ env.TAGS }}
           build-args: |
             CACHE_EXCHANGE_RATES_PERIOD=
             DISABLE_READ_API=false
