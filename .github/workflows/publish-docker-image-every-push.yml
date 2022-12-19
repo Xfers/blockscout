@@ -40,11 +40,11 @@ jobs:
           images: ${{ secrets.DOCKER_USERNAME }}/blockscout
 
       - name: Add Pull Request SHORT_SHA
-        if: github.event.is_pull_request
+        if: github.event.pull_request.head.sha != ''
         run: echo "SHORT_SHA=`echo ${{ github.event.pull_request.head.sha }} | cut -c1-7`" >> $GITHUB_ENV
 
       - name: Add Push SHORT_SHA
-        if: github.event.is_push
+        if: github.event.push.head_commit.id != ''
         run: echo "SHORT_SHA=`echo ${{ github.event.push.head_commit.id }} | cut -c1-7`" >> $GITHUB_ENV
 
       - name: Set Sha Tag
