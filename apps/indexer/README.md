@@ -2,6 +2,7 @@
 
 **TODO: Add description**
 
+
 ## Structure
 
 The indexer is split into multiple fetchers. Each fetcher has its own supervising tree with a separate `TaskSupervisor` for better detecting of memory, message or blocking problems.
